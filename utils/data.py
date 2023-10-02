@@ -1,7 +1,7 @@
 import os
 import polars as ps
 
-def read_folder(folderpath):
+def read_folder(folderpath='./input'):
     files = {}
     for directory, _, filenames in os.walk(folderpath):
         for filename in filenames:
@@ -10,7 +10,8 @@ def read_folder(folderpath):
     return files
 
 def read_file(files: dict[str, str], code: str, input_cols: list[str], output_cols: list[str]):
-    df = ps.read_csv(files[code], columns=input_cols.extend(output_cols))
-    return df
+    df = ps.read_csv(files[code])
+    return df.select(input_cols), df.select(output_cols)
 
-
+def get_as_df(data):
+    return ps.DataFrame(data)

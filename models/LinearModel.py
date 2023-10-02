@@ -22,3 +22,5 @@ class BaseLinearModel(Module):
         output = self.layer3(output)
         output = self.layer4(output)
         output = self.layer5(output)
+
+        return output

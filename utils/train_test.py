@@ -1,22 +1,21 @@
-from torch import Tensor, inference_mode
+import torch
+from torch import inference_mode
 from torch.optim import Adam, SGD
 from torch.nn import BCELoss, BCEWithLogitsLoss, CrossEntropyLoss, L1Loss, MSELoss, Module
 from sklearn.model_selection import train_test_split
 
 def trainer(model: Module, X, Y, test_perc: float, epochs: int, lr: float, loss_fn: str, optim_fn: str):
     train_input, test_input, train_output, test_output = train_test_split(X, Y, test_size=test_perc, random_state=42)
-    train_input, test_input, train_output, test_output = Tensor(train_input), Tensor(test_input), Tensor(train_output), Tensor(test_output)
 
     _loss_fn = get_loss_fn(loss_fn)
     _optim_fn = get_optim_fn(optim_fn, lr, model.parameters())
-
+    
     model.train(True)
     if _loss_fn and _optim_fn:
         for _ in range(epochs):
             _optim_fn.zero_grad()
-
             output = model(train_input)
-            loss = _loss_fn(test_output, output)
+            loss = _loss_fn(train_output, output)
 
             loss.backward()
             _optim_fn.step()
@@ -27,7 +26,7 @@ def tester(model: Module, test_input, test_output, preprocess, postprocess):
     model.eval()
     with inference_mode():
         output = model(test_input)
-        output = postprocess(output.numpy(force=True))
+        output = postprocess(None, output.detach().numpy())
         return output
         
 
