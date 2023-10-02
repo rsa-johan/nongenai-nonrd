@@ -1,3 +1,3 @@
 # nongenai-nonrd
 
-Base Template for Linear NN model development
+Base Template for Linear NN + GAN model development
