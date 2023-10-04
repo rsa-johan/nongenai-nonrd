@@ -1,0 +1,10 @@
+main:
+  linear-1:
+    input_cols:
+      - YearsExperience
+    output_cols:
+      - Salary
+  cnn-1:
+    input_cols:
+      - 1
+

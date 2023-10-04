@@ -15,3 +15,6 @@ def read_file(files: dict[str, str], code: str, input_cols: list[str], output_co
 
 def get_as_df(data):
     return ps.DataFrame(data)
+
+def get_config(key: str):
+    pass

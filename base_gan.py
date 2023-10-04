@@ -1,3 +1,4 @@
+from utils.config import get_config
 from utils.processor import processor
 from utils.train_test import trainer, tester
 from utils.data import read_file, read_folder, get_as_df
